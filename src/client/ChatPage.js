@@ -1,19 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 const useWebSocketChatPage = () => {
-    const [chatLog, setMessage] = useState(["Hello", "Hey", "test"]);
-    const onSendMessage = (m) => { console.log(m); }
+    const [chatLog, setChatLog] = useState([]);
+    const [ws, setWs] = useState();
+    const connected = useRef(false)
     
-    return { chatLog, onSendMessage }
+    const connect = () => {
+      console.log("Connecting");
+      const ws = new WebSocket("ws://" + window.location.host);
+      setWs(ws);
+      ws.onopen = (event) => {
+        console.log("Opened", event);
+        connected.current = true;
+      };
+      ws.onclose = (event) => {
+        console.log('Closed', event);
+        connected.current = false;
+      };
+      ws.onmessage = (msg) => {
+        const message = JSON.parse(msg.data);
+        setChatLog((chatLog) => [...chatLog, message]);
+      }
+    }
+    
+    useEffect(() => connect(), []);
+    
+    const handleSendMessage = (msg) => {
+      ws.send(JSON.stringify(msg));
+    };
+    return { chatLog, handleSendMessage };
 }
 
 
 const ChatPage = () => {
-  const { chatLog, onSendMessage } = useWebSocketChatPage()
+  const { chatLog, handleSendMessage } = useWebSocketChatPage();
 
-  return(
-    <ChatView chatLog={chatLog} onSendMessage={onSendMessage} />
-  )
+  return <ChatView chatLog={chatLog} onSendMessage={handleSendMessage} />;
   
 }
 
@@ -32,7 +54,11 @@ const ChatView = ({chatLog, onSendMessage}) => {
         <h1>Chat page</h1>
       </header>
       <main>
-        <div className="chat-display"></div>
+        <div className="chat-display">
+          {chatLog.map((message, index) => {
+            return <div key={index}>{message}</div>;
+          })}
+        </div>
       </main>
       <footer>
         <form onSubmit={handleSubmit}>
