@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container main {
+    background: lightcyan;
+    height: 50vh;
+}
+
+.chat-container form {
+    background: antiquewhite;
+    display: flex;
+    align-items: stretch;
+}
+
+.chat-input {
+    flex: 1;
+}
+
+.chat-container header {
+    background-color: antiquewhite;
+}
