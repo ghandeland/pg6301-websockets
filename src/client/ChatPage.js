@@ -32,14 +32,14 @@ const useWebSocketChatPage = () => {
 }
 
 
-const ChatPage = () => {
+export const ChatPage = () => {
   const { chatLog, handleSendMessage } = useWebSocketChatPage();
 
   return <ChatView chatLog={chatLog} onSendMessage={handleSendMessage} />;
   
 }
 
-const ChatView = ({chatLog, onSendMessage}) => {
+export const ChatView = ({chatLog, onSendMessage}) => {
   const [message, setMessage] = useState('');
 
   const handleSubmit = (e) => {
@@ -56,7 +56,7 @@ const ChatView = ({chatLog, onSendMessage}) => {
       <main>
         <div className="chat-display">
           {chatLog.map((message, index) => {
-            return <div key={index}>{message}</div>;
+            return <div class="chat-msg" key={index}>{message}</div>;
           })}
         </div>
       </main>
@@ -75,5 +75,3 @@ const ChatView = ({chatLog, onSendMessage}) => {
     </div>
   );
 }
-
-export default ChatPage
