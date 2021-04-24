@@ -67,6 +67,7 @@ const ChatView = ({chatLog, onSendMessage}) => {
             className="chat-input"
             onChange={(e) => setMessage(e.target.value)}
             autoFocus={true}
+            value={message}
           />
           <button value="Enter">Enter</button>
         </form>
