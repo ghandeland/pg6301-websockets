@@ -56,7 +56,7 @@ export const ChatView = ({chatLog, onSendMessage}) => {
       <main>
         <div className="chat-display">
           {chatLog.map((message, index) => {
-            return <div class="chat-msg" key={index}>{message}</div>;
+            return <div className="chat-msg" key={index}>{message}</div>;
           })}
         </div>
       </main>

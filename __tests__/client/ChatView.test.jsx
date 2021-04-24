@@ -4,13 +4,21 @@ import ReactDOM from 'react-dom';
 
 describe("chat view", () => {
     it("shows chat log as messages", () => {
+        
+        const cLog = ['hello', 'foo', "bar"];
+        const handleSendMsg = jest.fn()
+        
         const container = document.createElement("div");
         ReactDOM.render(
-            <ChatView chatlog={["a", "b", "c"]} />, container
+          <ChatView chatLog={cLog} onSendMessage={handleSendMsg} />,
+          container
         );
-        
-        expert(container.querySelector('.chat-msg')[0].textContent).toEqual("a");
-        expect(container).toMachSnapshot();
+                
+        expect(
+          container.querySelector('.chat-msg')
+            .textContent
+        ).toEqual('hello');
+        expect(container).toMatchSnapshot();
     })
     
 });

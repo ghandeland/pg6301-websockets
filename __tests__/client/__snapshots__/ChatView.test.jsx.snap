@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`chat view shows chat log as messages 1`] = `
+<div>
+  <div
+    class="chat-container"
+  >
+    <header>
+      <h1>
+        Chat page
+      </h1>
+    </header>
+    <main>
+      <div
+        class="chat-display"
+      >
+        <div
+          class="chat-msg"
+        >
+          hello
+        </div>
+        <div
+          class="chat-msg"
+        >
+          foo
+        </div>
+        <div
+          class="chat-msg"
+        >
+          bar
+        </div>
+      </div>
+    </main>
+    <footer>
+      <form>
+        <input
+          class="chat-input"
+          type="text"
+          value=""
+        />
+        <button
+          value="Enter"
+        >
+          Enter
+        </button>
+      </form>
+    </footer>
+  </div>
+</div>
+`;
