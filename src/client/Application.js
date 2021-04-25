@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import HomePage from './HomePage';
+import NavBar from './NavBar';
 import ChatPage from './ChatPage';
 import ProfilePage from './ProfilePage';
 import LoginPage from './LoginPage';
@@ -10,8 +11,7 @@ import fetchJson from './http'
 
 
 const Application = () => {
-    [accessToken, useAccessToken] = useState();
-    
+    const [accessToken, useAccessToken] = useState();
     
     const loadProfile = () => {
         const at = (accessToken ? { Authorization: ("Bearer " + accessToken) } : {})
@@ -23,15 +23,10 @@ const Application = () => {
     
   return (
     <div>
-      <header></header>
       <BrowserRouter>
-        <Link to="/">Homepage</Link>
-        {' | '}
-        <Link to="/chat">Chat</Link>
-        {' | '}
-        <Link to="/profile">Profile</Link>
-        {' | '}
-        <Link to="/login">Login</Link>
+      <header>  
+        <NavBar/>
+      </header>
         <Switch>
           <Route exact path="/">
             <HomePage />
