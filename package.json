@@ -46,5 +46,8 @@
   },
   "browserslist": [
     "last 1 Chrome version"
-  ]
+  ],
+  "alias": {
+    "react": "./node_modules/react"
+  }
 }

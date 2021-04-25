@@ -75,3 +75,5 @@ export const ChatView = ({chatLog, onSendMessage}) => {
     </div>
   );
 }
+
+export default ChatPage;

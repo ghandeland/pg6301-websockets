@@ -1,40 +1,37 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react';
+import { useLoading } from "./useLoading";
+import { fetchJson } from './http';
 
-// TODO: Extract fetching functionality into custom testable custom hook
-
-const fetchJson = async (url) => {
-    const result = await fetch(url);
-    return await result.json();
-}
-
-const ProfilePage = () => {
-    const [profile, setProfile] = useState(undefined)
-    const [loading, setLoading] = useState()
+export const ProfilePage = () => {
+  window
+  
+    // TODO extract api call
+    const {error, loading, data } = useLoading(
+        async () => await fetchJson("/api/profile")
+        );
     
-    const retrieveData = async () => {
-        try {
-            setLoading(true);
-            const res = await fetch("/api/profile");
-            setProfile(await res.json());
-        } catch(e) {
-            console.log("Data fetch failed", e)
-        } finally {
-            setLoading(false);
-        }
+    if (error) {
+        return (
+        <div>
+            <h1>Error</h1>
+            <p>{error.toString()}</p>
+        </div>
+        );
     }
     
-    useEffect(retrieveData, []);
-    
-    if (loading || !profile) {
+    if (loading) {
       return (
         <div>
-          <h1>Profile Page</h1>
+          <h1>Loading</h1>
         </div>
       );
     }
     
     return (
-        <div>{profile.email}</div>
+        <div>
+            <h1>Profile</h1>
+            <div>{data.email}</div>
+        </div>
     )  
 }
 
