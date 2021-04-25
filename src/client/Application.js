@@ -6,17 +6,20 @@ import NavBar from './NavBar';
 import ChatPage from './ChatPage';
 import ProfilePage from './ProfilePage';
 import LoginPage from './LoginPage';
-import fetchJson from './http';
+import { fetchJson } from './http';
+import LoginCallbackPage from './LoginCallbackPage';
 
 const Application = () => {
-  const [accessToken, useAccessToken] = useState();
+  const [accessToken, setAccessToken] = useState();
 
-  const loadProfile = () => {
+  const loadProfile = async () => {
     const at = accessToken ? { Authorization: 'Bearer ' + accessToken } : {};
-    fetchJson('/api/profile', {
-      headers: { ...at },
+    const json = await fetchJson('/api/profile', {
+        headers: { ...at },
     });
-  };
+    console.log("json", json);
+    return json;
+    };
 
   const googleIdentityProvider = {
     discoveryUrl: process.env.REACT_APP_GOOGLE_OAUTH_DISCOVERY_URL,
@@ -38,13 +41,15 @@ const Application = () => {
             <ChatPage />
           </Route>
           <Route exact path="/profile">
-            <ProfilePage />
+            <ProfilePage loadingFunction={loadProfile} />
           </Route>
           <Route exact path="/login">
             <LoginPage identityProvider={googleIdentityProvider} />
           </Route>
           <Route exact path="/login/callback">
-            <h1>Login callback</h1>
+            <LoginCallbackPage
+              onAccessToken={(access_Token) => setAccessToken(access_Token)}
+            />
           </Route>
         </Switch>
       </BrowserRouter>

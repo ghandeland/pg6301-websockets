@@ -4,7 +4,7 @@ const useLoading = (loadingFunction) => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
-
+  
   async function reload() {
     setLoading(true);
     setData(undefined);
@@ -12,7 +12,7 @@ const useLoading = (loadingFunction) => {
     try {
       setData(await loadingFunction());
     } catch (e) {
-      setError(true);
+      setError(e);
     } finally {
       setLoading(false);
     }
