@@ -2,7 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/api/profile", (req, res) => {
-    console.log("router works");
+    
+    const authorization = req.header("Authorization")
+    if(!authorization) {
+        return res.send(401);
+    }
+    
     res.json(testProfile);
 })
 

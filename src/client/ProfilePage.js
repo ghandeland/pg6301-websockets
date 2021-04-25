@@ -2,12 +2,14 @@ import React from 'react';
 import { useLoading } from "./useLoading";
 import { fetchJson } from './http';
 
-export const ProfilePage = () => {
+export const ProfilePage = (
+  {loadingFunction = async () => await fetchJson("/api/profile")}
+) => {
   window
   
     // TODO extract api call
     const {error, loading, data } = useLoading(
-        async () => await fetchJson("/api/profile")
+        loadingFunction
         );
     
     if (error) {
